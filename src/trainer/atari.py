@@ -20,7 +20,7 @@ def run_episode(env, agent, max_steps, render_every=None):
             env.render()
 
 
-class RandomAgent(object):
+class RandomAgent:
 
     def __init__(self, action_space):
         self.action_space = action_space
@@ -39,11 +39,11 @@ def sample_final_epsilon():
     return np.random.choice(final_epsilons, 1, p=list(probabilities))[0]
 
 
-def process_observation(observation, shape):
+def preprocess(observation, shape):
     return skimage.transform.resize(skimage.color.rgb2gray(observation), shape)
 
 
-class TFAgent(object):
+class TFAgent:
 
     def __init__(self, model_fn, action_space, trace_length, shape=(64, 64)):
         self.action_space = action_space
@@ -60,7 +60,7 @@ class TFAgent(object):
         self.last_action = None
 
         with self.graph.as_default():
-            self.session = tf.contrib.learn.monitored_session.MonitoredSession()
+            self.session = tf.train.MonitoredSession()
 
     def _create_graph(self):
         graph = tf.Graph()
@@ -77,7 +77,7 @@ class TFAgent(object):
 
     def reset(self, observation):
         print("Episode %d, Reward: %.2f, Epsilon: %.4f" % (self.episode, self.episode_reward, self.epsilon))
-        observation = process_observation(observation, self.shape)
+        observation = preprocess(observation, self.shape)
         self.observation_trace = [observation] * self.trace_length
         self.last_action = None
         self.episode_reward = 0.0
@@ -85,7 +85,7 @@ class TFAgent(object):
         self.episode += 1
 
     def act(self, observation, reward):
-        observation = process_observation(observation, self.shape)
+        observation = preprocess(observation, self.shape)
         if self.last_action is not None:
             _, loss = self.session.run([self.train_op, self.loss], {
                 self.features: [self.observation_trace],
@@ -125,7 +125,7 @@ def simple_model(features, targets, mode, params):
     reward, action = targets['reward'], targets['action']
     action = tf.one_hot(action, n_actions, 1.0, 0.0)
     action_q_values = tf.reduce_sum(
-        tf.mul(q_values, action), reduction_indices=[1])
+        tf.multiply(q_values, action), reduction_indices=[1])
     loss = tf.contrib.losses.mean_squared_error(action_q_values, reward)
     train_op = tf.contrib.layers.optimize_loss(
         loss, tf.contrib.framework.get_global_step(),

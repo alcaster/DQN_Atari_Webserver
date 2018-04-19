@@ -1,20 +1,10 @@
-#!/usr/bin/env python
-from importlib import import_module
-import os
 from flask import Flask, render_template, Response
+from flask_jsglue import JSGlue
 
-# import camera driver
-from cameras.camera_gym import CameraGym
-
-if os.environ.get('CAMERA'):
-    Camera = import_module('camera_' + os.environ['CAMERA']).Camera
-else:
-    pass
-
-# Raspberry Pi camera module (requires picamera package)
-# from camera_pi import Camera
+from cameras.camera_gym import CameraGymGame1
 
 app = Flask(__name__)
+jsglue = JSGlue(app)
 
 
 @app.route('/')
@@ -31,10 +21,10 @@ def gen(camera):
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
-@app.route('/video_feed')
-def video_feed():
+@app.route('/game1')
+def game1():
     """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(CameraGym()),
+    return Response(gen(CameraGymGame1()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 

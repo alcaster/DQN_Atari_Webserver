@@ -6,14 +6,14 @@ from PIL import Image
 from cameras.base_camera import BaseCamera
 
 
-class CameraGym(BaseCamera):
+class CameraGymGame1(BaseCamera):
     @staticmethod
     def frames():
         env = gym.make('Breakout-v0')
         while True:
             env.reset()
             done = False
-            while not done:# or i > max_steps:
+            while not done:  # or i > max_steps:
                 time.sleep(0.05)
                 observation, reward, done, _ = env.step(env.action_space.sample())
                 obs = env.render(mode='rgb_array')
