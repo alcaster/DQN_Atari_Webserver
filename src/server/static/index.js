@@ -7,17 +7,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
             nodes[i].addEventListener("click", callGame);
         }
     }
+
     $("stop_button").addEventListener("click", () => {
-        $("preview").removeAttribute("src")
+        $("preview").removeChild($("preview").firstElementChild);
     });
 });
 
 function callGame() {
+    let e = document.createElement('img');
     try {
-        $("preview").src = Flask.url_for(this.id)
+        e.src = Flask.url_for(this.id);
     }
     catch (e) {
         console.log(e.message);
-        $("preview").removeAttribute("src")
+    }
+    finally {
+        e.classList.add("preview_style");
+        $("preview").appendChild(e);
     }
 }
