@@ -1,3 +1,4 @@
 pillow
 flask
 Flask-JSGlue
+gym[atari]
