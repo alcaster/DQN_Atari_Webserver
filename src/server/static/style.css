@@ -1,4 +1,7 @@
 .preview_style {
-    height: 420px;
-    width: 320px;
+    width: 100%;
+}
+
+.jumbotron {
+    margin-bototm: 0 !important;
 }

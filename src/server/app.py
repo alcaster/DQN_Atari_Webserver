@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Response
 from flask_jsglue import JSGlue
 
-from cameras.camera_gym import CameraGymGame1
+from cameras.camera_gym import CameraGymGame1, CartPole, Pong, MsPacman, SpaceInvaders
 
 app = Flask(__name__)
 jsglue = JSGlue(app)
@@ -27,6 +27,27 @@ def game1():
     return Response(gen(CameraGymGame1()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/game2')
+def game2():
+    return Response(gen(CartPole()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/game3')
+def game3():
+    return Response(gen(MsPacman()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/game4')
+def game4():
+    return Response(gen(Pong()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/game5')
+def game5():
+    return Response(gen(SpaceInvaders()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', threaded=True)
+    app.run(host='0.0.0.0', port=80, threaded=True)

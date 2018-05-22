@@ -10,23 +10,27 @@
     <title>Atari DQN</title>
 </head>
 <body>
-<div class="container">
+<div class="container-full">
 
     <div class="jumbotron">
         <h1>Agent playing Atari games using Deep Q-Learning algorithm.</h1>
         <p>Project for Artificial Intelligence course.</p>
     </div>
     <div class="row">
-        <div class="col">
-            <div id="gameButtons" class="row"><!-- Id of these buttons have to be the same as endpoint. -->
-                <button type="button" id="game1" class="btn btn-primary">Breckout</button>
-                <button type="button" id="game2" class="btn btn-primary">CardPole</button>
-            </div>
-            <div class="row" style="margin-top: 20px">
-                <button type="button" id="stop_button" class="btn btn-danger">Stop</button>
-            </div>
-        </div>
-        <div class="col" id="preview">
+        <div class="col-md-8 mt-3">
+	<!-- Id of these buttons have to be the same as endpoint. -->
+	<div id="gameButtons" class="col-md-12 text-center">
+	        <button type="button" id="game1" class="btn btn-primary">Breckout</button>
+	        <button type="button" id="game2" class="btn btn-primary">CartPole</button>
+		<button type="button" id="game3" class="btn btn-primary">MsPacman</button>
+		<button type="button" id="game4" class="btn btn-primary">Pong</button>
+		<button type="button" id="game5" class="btn btn-primary">SpaceInvaders</button>
+	</div>
+	<div class="col-md-12 text-center mt-4">
+		<button type="button" id="stop_button" class="btn btn-danger">Stop</button>
+	</div>
+    </div>
+        <div class="col-md-4" id="preview">
 {#            <img id="preview">#}
         </div>
     </div>
